@@ -8,6 +8,21 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+def compute_bin_accuracy(c_pred, y_pred, c_true, y_true):
+    c_pred = c_pred.reshape(-1).cpu().detach() > 0.5
+    y_probs = y_pred.cpu().detach()
+    y_pred = y_probs > 0.5
+    c_true = c_true.reshape(-1).cpu().detach()
+    y_true = y_true.reshape(-1).cpu().detach()
+    c_accuracy = sklearn.metrics.accuracy_score(c_true, c_pred)
+    c_auc = sklearn.metrics.roc_auc_score(c_true, c_pred, multi_class='ovo')
+    c_f1 = sklearn.metrics.f1_score(c_true, c_pred, average='macro')
+    y_accuracy = sklearn.metrics.accuracy_score(y_true, y_pred)
+    y_auc = sklearn.metrics.roc_auc_score(y_true, y_probs)
+    y_f1 = sklearn.metrics.f1_score(y_true, y_pred)
+    return (c_accuracy, c_auc, c_f1), (y_accuracy, y_auc, y_f1)
+
+
 def compute_accuracy(
         c_pred,
         y_pred,
