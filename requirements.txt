@@ -1,0 +1,13 @@
+einops==0.6.0
+lightning-utilities==0.7.0
+matplotlib==3.7.1
+numpy==1.23.5
+opencv-python==4.7.0.72
+pathtools==0.1.2
+Pillow==9.3.0
+pytorch-lightning==1.9.3
+scikit-learn==1.2.1
+timm==0.6.12
+torch==1.12.1
+torchvision==0.13.1
+tqdm==4.64.1
