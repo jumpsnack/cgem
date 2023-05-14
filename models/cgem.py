@@ -46,7 +46,7 @@ class ConceptGraphEmbeddingModels(ABC):
             nn.Sigmoid()
         )
 
-        self.c_gcn = ConceptGCN(dim)
+        self.c_gcn = ConceptGCN(dim, norm=self.configs.get('norm', True), degree_norm=self.configs.get('degree_norm', True))
         self.head = nn.Linear(dim * self.n_concepts, self.n_tasks)
 
     def forward(self, x, c=None, y=None, train=False, visualize=False, homo=False, **kwargs):
@@ -215,7 +215,7 @@ class DeformableBipartiteGCN(nn.Module):
 
 
 class ConceptGCN(nn.Module):
-    def __init__(self, dim, out_norm=False, degree_norm=True, gamma=1) -> None:
+    def __init__(self, dim, norm=True, degree_norm=True, gamma=1) -> None:
         super().__init__()
         self.gamma = gamma
         self.degree_norm = degree_norm
@@ -224,7 +224,7 @@ class ConceptGCN(nn.Module):
         self.b_dir = nn.Linear(dim, dim, bias=False)
 
         self.fc = nn.Linear(dim, dim)
-        self.fc_norm = nn.LayerNorm(dim) if out_norm else nn.Identity()
+        self.fc_norm = nn.LayerNorm(dim) if norm else nn.Identity()
 
     def forward(self, c_emb, rel):
         _, N, _ = c_emb.shape

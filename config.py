@@ -14,7 +14,9 @@ CGEM_CUB_wo_randint = dict(
     concept_loss_weight=5.0,
     dim=16,
     inter_prob=0.,
-    lr=0.01
+    lr=0.01,
+    norm=True,
+    degree_norm=True
 )
 
 CGEM_CUB_randint = dict(
@@ -24,7 +26,9 @@ CGEM_CUB_randint = dict(
     concept_loss_weight=5.0,
     dim=16,
     inter_prob=0.25,
-    lr=0.01
+    lr=0.01,
+    norm=True,
+    degree_norm=True
 )
 
 CGEM_CUB_wo_randint.update(GLOBAL_CONFIGS)
